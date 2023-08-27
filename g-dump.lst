@@ -1,0 +1,383 @@
+0                          CARD 1 OF DUMP FROM GERMANY                                                    PAGE    1
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  101                JOB   CARD 1 OF DUMP FROM GERMANY
+  103         * SET WORD MARKS
+  104                ORG   1                                                                  0001
+  105                SW    A1,A2                                                    7  0001  , 008 012
+  106         A1     SW    A3                                                       4  0008  , 016
+  107         A2     SW    A4                                                       4  0012  , 023
+  108         A3     SW    A5,A6                                                    7  0016  , 030 034
+  109         A4     SW    A7,A8                                                    7  0023  , 041 048
+  110         A5     SW    A9                                                       4  0030  , 049
+  111         A6     SW    A10,A11                                                  7  0034  , 056 063
+  112         A7     SW    BLOOP,A13                                                7  0041  , 022 072
+  113         A8     SW                                                             1  0048  ,
+  114         A9     SW    A14,A15                                                  7  0049  , 074 076
+  115         A10    SW    A16,A12                                                  7  0056  , 080 067
+  116         A11    CW    A4                                                       4  0063  ) 023
+  117         A12    SW    B1                                                       4  0067  , 029
+  118                W                                                              1  0071  2
+  119         A13       2)                                                          2  0072  2 )
+  120         A14       N0                                                          2  0074  N 0
+  121         A15    R     BSTART                                                   4  0076  1 012
+  122         A16    NOP                                                            1  0080  N
+1                          CARD 2 OF DUMP FROM GERMANY                                                    PAGE    2
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  123                JOB   CARD 2 OF DUMP FROM GERMANY
+  124                ORG   1                                                                  0001
+  125         BDOTS2 DCW   @..@                                                     2  0002
+  126                DC    @..5..@                                                  5  0007
+  127         BADDR  DCW   210                                                      3  0010
+  128                DC    @ @                                                      1  0011
+  129         BSTART CS    332              MAKE SURE 330 IS NOT ZERO               4  0012  / 332
+  130                   N0 0                                                        5  0016  N 000 0
+  131                NOP                                                            1  0021  N
+  132         BLOOP  LCA   BADDR,210                                                7  0022  L 010 210
+  133         B1     LCA                                                            1  0029  L
+  134                CW    A8                                                       4  0030  ) 048
+  135                A     BREAD+1,BADDR                                            7  0034  A 077 010
+  136                BCE   BDONE,330,0                                              8  0041  B 067 330 0
+  137                A     BREAD+1,BLOOP+6                                          7  0049  A 077 028
+  138                LCA   BDOTS2,332                                               7  0056  L 002 332
+  139                B     BLOOP                                                    4  0063  B 022
+  140         BDONE  CW    B1                                                       4  0067  ) 029
+  141                W                                                              1  0071  2
+  142                   N0                                                          2  0072  N 0
+  143                   N0                                                          2  0074  N 0
+  144         BREAD  R     CSTART                                                   4  0076  1 012
+  145                DCW   #1                                                       1  0080
+1                          CARD 3 OF DUMP FROM GERMANY                                                    PAGE    3
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  146                JOB   CARD 3 OF DUMP FROM GERMANY
+  147                ORG   1                                                                  0001
+  148         CGOTWM MCW   CNOP,CDONE                                               7  0001  M 080 067
+  149                B     CCONT                                                    4  0008  B 034
+  150         CSTART SW    C1                                                       4  0012  , 017
+  151                NOP                                                            1  0016  N
+  152         C1     CS    332                                                      4  0017  / 332
+  153                NOP                                                            1  0021  N
+  154                BW    CGOTWM,101                                               8  0022  V 001 101 1
+  155                SW    101                                                      4  0030  , 101
+  156         CCONT  LCA   101,201                                                  7  0034  L 101 201
+  157                BCE   CDONE,CCONT+4,3                                          8  0041  B 067 038 3
+  158                A     CREAD,CCONT+3                                            7  0049  A 076 037
+  159                A     CREAD,CCONT+6                                            7  0056  A 076 040
+  160                B     CCONT                                                    4  0063  B 034
+  161         CDONE  CW    201                                                      4  0067  ) 201
+  162                W                                                              1  0071  2
+  163                   2)                                                          2  0072  2 )
+  164                   N0                                                          2  0074  N 0
+  165         CREAD  R     DSTART                                                   4  0076  1 012
+  166         CNOP   NOP                                                            1  0080  N
+1                          CARD 4 OF DUMP FROM GERMANY                                                    PAGE    4
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  167                JOB   CARD 4 OF DUMP FROM GERMANY
+  168                ORG   1                                                                  0001
+  169                DCW   @....5..@                                                7  0007
+  170         DADDR  DCW   110                                                      3  0010
+  171                DC    #1                                                       1  0011
+  172         DSTART CS    300              MAKE SURE 300 IS NOT ZERO               4  0012  / 300
+  173                NOP                                                            1  0016  N
+  174                SW    D1                                                       4  0017  , 029
+  175                NOP                                                            1  0021  N
+  176         DLOOP  LCA   DADDR,210                                                7  0022  L 010 210
+  177         D1     LCA                                                            1  0029  L
+  178                NOP   0                                                        4  0030  N 000
+  179                A     DREAD+1,DADDR                                            7  0034  A 077 010
+  180                BCE   DDONE,300,0                                              8  0041  B 067 300 0
+  181                A     DREAD+1,DLOOP+6                                          7  0049  A 077 028
+  182                NOP   0,0                                                      7  0056  N 000 000
+  183                B     DLOOP                                                    4  0063  B 022
+  184         DDONE  CW    D1                                                       4  0067  ) 029
+  185                W                                                              1  0071  2
+  186                   N0                                                          2  0072  N 0
+  187                   N0                                                          2  0074  N 0
+  188         DREAD  R     ESTART                                                   4  0076  1 017
+  189                NOP                                                            1  0080  N
+1                          CARD 5 OF DUMP FROM GERMANY                                                    PAGE    5
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  190                JOB   CARD 5 OF DUMP FROM GERMANY
+  191                ORG   1                                                                  0001
+  192         EGOTWM MCW   ENOP,EDONE                                               7  0001  M 080 067
+  193                B     ECONT                                                    4  0008  B 034
+  194                DCW   #4                                                       4  0015
+  195                DCW   #1                                                       1  0016
+  196         ESTART CS    300                                                      4  0017  / 300
+  197                CS                                                             1  0021  /
+  198                BW    EGOTWM,81                                                8  0022  V 001 081 1
+  199                SW    81                                                       4  0030  , 081
+  200         ECONT  LCA   81,281                                                   7  0034  L 081 281
+  201                BCE   EDONE,ECONT+4,3                                          8  0041  B 067 038 3
+  202                A     EREAD,ECONT+3                                            7  0049  A 076 037
+  203                A     EREAD,ECONT+6                                            7  0056  A 076 040
+  204                B     ECONT                                                    4  0063  B 034
+  205         EDONE  CW    281                                                      4  0067  ) 281
+  206                W                                                              1  0071  2
+  207                   2)                                                          2  0072  2 )
+  208                   N0                                                          2  0074  N 0
+  209         EREAD  R     FSTART                                                   4  0076  1 030
+  210         ENOP   NOP                                                            1  0080  N
+1                          CARD 6 OF DUMP FROM GERMANY                                                    PAGE    6
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  211                JOB   CARD 6 OF DUMP FROM GERMANY
+  212                ORG   1                                                                  0001
+  213         FDOTS  DCW   @......*1*..*2*..*3*.@                                  20  0020
+  214                DC    #9                                                       9  0029
+  215         FSTART SW    F1                                                       4  0030  , 048
+  216                CW    A1,A2                                                    7  0034  ) 008 012
+  217                CW    BLOOP,C1                                                 7  0041  ) 022 017
+  218         F1     CW                                                             1  0048  )
+  219                LCA   FDOTS,300                                                7  0049  L 020 300
+  220                SW    GINDEX-4,GAUS-2                                          7  0056  , 023 016
+  221                R     GSTART                                                   4  0063  1 034
+  222                DCW   #4                                                       4  0070
+  223                DCW   #1                                                       1  0071
+  224                DCW   #2                                                       2  0073
+  225                DCW   #2                                                       2  0075
+  226                DCW   #4                                                       4  0079
+  227                DCW   #1                                                       1  0080
+1                          CARD 7 OF DUMP FROM GERMANY                                                    PAGE    7
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  228                JOB   CARD 7 OF DUMP FROM GERMANY
+  229                ORG   1                                                                  0001
+  230         GUMS   DCW   @UMSCHALTER EIN@                                        14  0014
+  231                DC    #1                                                       1  0015
+  232         GAUS   DCW   @AUS@                                                    3  0018
+  233                DCW   #4                                                       4  0022
+  234         GINDEX DCW   @INDEX@                                                  5  0027
+  235                DC    #2                                                       2  0029
+  236                DCW   #4                                                       4  0033
+  237         GSTART LCA   GINDEX,280                                               7  0034  L 027 280
+  238                LCA   GINDEX,305                                               7  0041  L 027 305
+  239                NOP                                                            1  0048  N
+  240                LCA   GUMS,214                                                 7  0049  L 014 214
+  241                LCA   GAUS,234                                                 7  0056  L 018 234
+  242                CW    A14                                                      4  0063  ) 074
+  243                CW    A12                                                      4  0067  ) 067
+  244                NOP                                                            1  0071  N
+  245                SW    HLOOP                                                    4  0072  , 011
+  246                R     HLOOP                                                    4  0076  1 011
+  247                DCW   #1                                                       1  0080
+1                          CARD 8 OF DUMP FROM GERMANY                                                    PAGE    8
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  248                JOB   CARD 8 OF DUMP FROM GERMANY
+  249                ORG   1                                                                  0001
+  250         HINC   DCW   2                                                        1  0001
+  251                DC    #9                                                       9  0010
+  252         HLOOP  BSS   HON,B                                                    5  0011  B 034 B
+  253         HOFF   MCW   HSWICH,236                                               7  0016  M 080 236
+  254                A     HINC,HOFF+6                                              7  0023  A 001 022
+  255                B     HCONT                                                    4  0030  B 049
+  256         HON    MCW   HSWICH,216                                               7  0034  M 080 216
+  257                A     HINC,HON+6                                               7  0041  A 001 040
+  258                NOP                                                            1  0048  N
+  259         HCONT  A     HREAD,HLOOP+4                                            7  0049  A 076 015
+  260                A     HREAD,HSWICH                                             7  0056  A 076 080
+  261                BCE   HREAD,HSWICH,H                                           8  0063  B 076 080 H
+  262                NOP                                                            1  0071  N
+  263                B     HLOOP                                                    4  0072  B 011
+  264         HREAD  R     ISTART                                                   4  0076  1 034
+  265         HSWICH DCW   @B@                                                      1  0080
+1                          CARD 9 OF DUMP FROM GERMANY                                                    PAGE    9
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  266                JOB   CARD 9 OF DUMP FROM GERMANY
+  267                ORG   101                                                                0101
+  268         * CLEAR CORE AT 299, THEN AT 80, SET A WORD MARK AT 1, READ AND
+  269         * BRANCH TO 1.  LOADED FROM 16 6O 116
+  270         ICLR1  CS    299                                                      4  0101  / 299
+  271         ICLR2  CS    80                                                       4  0105  / 080
+  272         ICLR3  SW    JSTART                                                   4  0109  , 001
+  273         ICLR4  R     JSTART                                                   4  0113  1 001
+  274         * START OF THE CARD...
+  275                ORG   1                                                                  0001
+  276         ILOAD  DCW   @/299/080,0011001@                                      16  0016
+  277                DC    #6                                                       6  0022
+  278                DCW   #7                                                       7  0029
+  279                DCW   #4                                                       4  0033
+  280         ISTART SW    I1,I2                                                    7  0034  , 067 074
+  281                CW    HLOOP,HOFF                                               7  0041  ) 011 016
+  282                CW                                                             1  0048  )
+  283                LCA   ILOAD,ICLR4+3                                            7  0049  L 016 116
+  284                SW    ICLR4+4,ICLR4                                            7  0056  , 117 113
+  285                SW    ICLR3                                                    4  0063  , 109
+  286         I1     SW    ICLR2                                                    4  0067  , 105
+  287                W                                                              1  0071  2
+  288                   N0                                                          2  0072  N 0
+  289         I2     CC    K                                                        2  0074  F K
+  290                B     ICLR1                                                    4  0076  B 101
+1                          CARD 10 OF DUMP FROM GERMANY                                                   PAGE   10
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  291                JOB   CARD 10 OF DUMP FROM GERMANY
+  292         *
+  293                ORG   75                                                                 0075
+  294                MCW   175,105                                                  7  0075  M 175 105
+  295                MCW                                                            1  0082  M
+  296                MCW   172,114                                                  7  0083  M 172 114
+  297                MCW   175,119                                                  7  0090  M 175 119
+  298                SW    245                                                      4  0097  , 245
+  299                MCW   333,245                                                  7  0101  M 333 245
+  300                BW    120,331                                                  8  0108  V 120 331 1
+  301                CW    245                                                      4  0116  ) 245
+  302                A     168,175                                                  7  0120  A 168 175
+  303                MA                                                             1  0127  #
+  304                C     175,179                                                  7  0128  C 175 179
+  305                BU    068                                                      5  0135  B 068 /
+  306                W                                                              1  0140  2
+  307                   2)                                                          2  0141  2 )
+  308                   N0                                                          2  0143  N 0
+  309                MN    14,173                                                   7  0145  D 014 173
+  310                C     51,191                                                   7  0152  C 051 191
+  311                BU    1                                                        5  0159  B 001 /
+  312                R     PSTART                                                   4  0164  1 001
+  313                DCW   1                                                        1  0168
+  314                DCW   1                                                        1  0169
+  315                DCW   333                                                      3  0172
+  316                DCW   245                                                      3  0175
+  317                DCW   22                                                       2  0177
+  318                DCW   12                                                       2  0179
+  319                DCW   @.....5..@                                               8  0187
+  320                DCW   39                                                       2  0189
+  321                DCW   00400                                                    5  0194
+  322         ZONE   DC    @-ZONE @                                                 6  0200
+  323                ORG   1                                                                  0001
+  324         JSTART SW    J1,J2                                                    7  0001  , 008 015
+  325         J1     SW    J3,J4                                                    7  0008  , 022 023
+  326         J2     SW    J5,J6                                                    7  0015  , 027 031
+  327         J3     NOP                                                            1  0022  N
+  328         J4     SW    J7                                                       4  0023  , 038
+  329         J5     SW    J8                                                       4  0027  , 042
+  330         J6     LCA   JCODE,ZONE                                               7  0031  L 078 200
+  331         J7     R     KSTART                                                   4  0038  1 001
+  332         J8     EQU   *+1                                                         0042
+  333         JCODE  DCW   @1001113332452212.....5..3900400-ZONE @                 37  0078
+1                          CARD 11 OF DUMP FROM GERMANY                                                   PAGE   11
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  334                JOB   CARD 11 OF DUMP FROM GERMANY
+  335                ORG   1                                                                  0001
+  336         KSTART LCA   KCODE,119                                                7  0001  L 080 119
+  337                SW    190,188                                                  7  0008  , 190 188
+  338                SW    170,83                                                   7  0015  , 170 083
+  339                SW                                                             1  0022  ,
+  340                SW    180                                                      4  0023  , 180
+  341                SW    178                                                      4  0027  , 178
+  342                SW    176,68                                                   7  0031  , 176 068
+  343                R     LSTART                                                   4  0038  1 001
+  344         KCODE  DCW   @7MM172114M175119,245M333245V1203331)245@               39  0080
+1                          CARD 12 OF DUMP FROM GERMANY                                                   PAGE   12
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  345                JOB   CARD 12 OF DUMP FROM GERMANY
+  346                ORG   1                                                                  0001
+  347         LSTART LCA   LCODE2,163                                               7  0001  L 079 163
+  348                LCA   LCODE1,144                                               7  0008  L 066 144
+  349                SW    141,64                                                   7  0015  , 141 064
+  350                SW                                                             1  0022  ,
+  351                SW    180                                                      4  0023  , 180
+  352                SW    178                                                      4  0027  , 178
+  353                SW    176,68                                                   7  0031  , 176 068
+  354                R     MSTART                                                   4  0038  1 001
+  355         LCODE1 DCW   @A168175#C175179B068/22)N0@                             25  0066
+  356                DC    #1                                                       1  0067
+  357         LCODE2 DCW   @C051191B001/@                                          12  0079
+1                          CARD 13 OF DUMP FROM GERMANY                                                   PAGE   13
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  358                JOB   CARD 13 OF DUMP FROM GERMANY
+  359                ORG   1                                                                  0001
+  360         MSTART LCA   MCODE+6,151                                              7  0001  L 073 151
+  361                SW    173,168                                                  7  0008  , 173 168
+  362                SW    159,143                                                  7  0015  , 159 143
+  363                NOP                                                            1  0022  N
+  364                SW    135,128                                                  7  0023  , 135 128
+  365                CW    42,81                                                    7  0030  ) 042 081
+  366                SW    127,116                                                  7  0037  , 127 116
+  367                SW    108                                                      4  0044  , 108
+  368                SW    101,97                                                   7  0048  , 101 097
+  369                SW    90,90                                                    7  0055  , 090 090
+  370                NOP                                                            1  0062  N
+  371                R     NSTART                                                   4  0063  1 001
+  372         MCODE  MN    14,173                                                   7  0067  D 014 173
+1                          CARD 14 OF DUMP FROM GERMANY                                                   PAGE   14
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  373                JOB   CARD 14 OF DUMP FROM GERMANY
+  374                ORG   1                                                                  0001
+  375         NSTART MCS   200,211                                                  7  0001  Z 200 211
+  376                MCW   172,205                                                  7  0008  M 172 205
+  377                LCA   37,251                                                   7  0015  L 037 251
+  378                NOP                                                            1  0022  N
+  379                B     NCONT                                                    4  0023  B 038
+  380                DCW   #4                                                       4  0030
+  381                DCW   @,,5,,39@                                                7  0037
+  382         NCONT  CW    27,27                                                    7  0038  ) 027 027
+  383                R     OSTART                                                   4  0045  1 023
+1                          CARD 15 OF DUMP FROM GERMANY                                                   PAGE   15
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  384                JOB   CARD 15 OF DUMP FROM GERMANY
+  385                ORG   1                                                                  0001
+  386                MCS   200,211                                                  7  0001  Z 200 211
+  387                A     169,192                                                  7  0008  A 169 192
+  388                LCA   189,251                                                  7  0015  L 189 251
+  389                LCA                                                            1  0022  L
+  390         OSTART BCE   49,188,9                                                 8  0023  B 049 188 9
+  391                A     169,188                                                  7  0031  A 169 188
+  392                A     169,20                                                   7  0038  A 169 020
+  393                B     15                                                       4  0045  B 015
+  394                MN    80,188                                                   7  0049  D 080 188
+  395                MCW   177,20                                                   7  0056  M 177 020
+  396                W                                                              1  0063  2
+  397                CW    299                                                      4  0064  ) 299
+  398                MCW   175,100                                                  7  0068  M 175 100
+  399                MCW   175,107                                                  7  0075  M 175 107
+1                          CARD 16 OF DUMP FROM GERMANY                                                   PAGE   16
+0 SEQ PG LIN  LABEL  OP    OPERANDS                                            SFX CT  LOCN  INSTRUCTION TYPE  CARD
+ 
+  400                JOB   CARD 16 OF DUMP FROM GERMANY
+  401                ORG   1                                                                  0001
+  402         PSTART SW    27,35                                                    7  0001  , 027 035
+  403                SW    36,54                                                    7  0008  , 036 054
+  404                NOP   0,0                                                      7  0015  N 000 000
+  405                NOP                                                            1  0022  N
+  406                SW    65                                                       4  0023  , 065
+  407                CW    75                                                       4  0027  ) 075
+  408                CS    332                                                      4  0031  / 332
+  409                CS                                                             1  0035  /
+  410                   N0                                                          2  0036  N 0
+  411                LCA   PUMSCH,213                                               7  0038  L 079 213
+  412                NOP   0                                                        4  0045  N 000
+  413                BLC   63                                                       5  0049  B 063 A
+  414                   N0                                                          2  0054  N 0
+  415                LCA   PAUS,213                                                 7  0056  L 066 213
+  416                H                                                              1  0063  .
+  417         PAUS   DCW   @AUS@                                                    3  0066
+  418                DC    #1                                                       1  0067
+  419         PUMSCH DCW   @UMSCH. A EIN@                                          12  0079
+  420                END                                                                     / 333 080
+1                          CARD 16 OF DUMP FROM GERMANY                                                   PAGE   17
+0SYMBOL  ADDRESS  SYMBOL  ADDRESS  SYMBOL  ADDRESS  SYMBOL  ADDRESS  SYMBOL  ADDRESS  SYMBOL  ADDRESS  SYMBOL  ADDRESS  
+
+ A1          8    A10        56    A11        63    A12        67    A13        72    A14        74    A15        76   
+ A16        80    A2         12    A3         16    A4         23    A5         30    A6         34    A7         41   
+ A8         48    A9         49    B1         29    BADDR      10    BDONE      67    BDOTS2      2    BLOOP      22   
+ BREAD      76    BSTART     12    C1         17    CCONT      34    CDONE      67    CGOTWM      1    CNOP       80   
+ CREAD      76    CSTART     12    D1         29    DADDR      10    DDONE      67    DLOOP      22    DREAD      76   
+ DSTART     12    ECONT      34    EDONE      67    EGOTWM      1    ENOP       80    EREAD      76    ESTART     17   
+ F1         48    FDOTS      20    FSTART     30    GAUS       18    GINDEX     27    GSTART     34    GUMS       14   
+ HCONT      49    HINC        1    HLOOP      11    HOFF       16    HON        34    HREAD      76    HSWICH     80   
+ I1         67    I2         74    ICLR1     101    ICLR2     105    ICLR3     109    ICLR4     113    ILOAD      16   
+ ISTART     34    J1          8    J2         15    J3         22    J4         23    J5         27    J6         31   
+ J7         38    J8         42    JCODE      78    JSTART      1    KCODE      80    KSTART      1    LCODE1     66   
+ LCODE2     79    LSTART      1    MCODE      67    MSTART      1    NCONT      38    NSTART      1    OSTART     23   
+ PAUS       66    PSTART      1    PUMSCH     79    ZONE      200   
